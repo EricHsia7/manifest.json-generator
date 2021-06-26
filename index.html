@@ -1,0 +1,260 @@
+<meta charset="UTF-8">
+<title>Manifest.json Generator</title>
+
+<style>
+
+#imagee {
+  width:128px;
+  height:128px;
+}
+.page {
+  position:fixed;
+  top:55px;
+  left:0px;
+  width:100%;
+  height:calc(100% - 55px);
+  background:#fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction:column;
+}
+.p2 ,.p3,.p4{
+  display:none;
+}
+canvas {
+  display:none;
+}
+input[type="text"] {
+  border:none;
+  background:#f5f5f5;
+  width:150px;
+  height:35px;
+  padding:5px;
+  font-size:18px;
+  border-radius:10px;
+}
+.bar {
+  width:100%;
+  height:55px;
+  position:fixed;
+  left:0px;
+  top:0px;
+  background:#fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.line {
+  position:absolute;
+  left:0px;
+  bottom:0px;
+  height:3px;
+  background:#333;
+  width:0%;
+  transition:0.3s;
+}
+.btn {
+  background:#e3e3e3;
+  color:#333;
+  height:45px;
+  width:160px;
+  border-radius:12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size:18px;
+  margin-left:0px;
+  font-family: 'Noto Sans TC', sans-serif;
+  font-weight:700;
+}
+.m10 {
+  margin-top:10px;
+}
+
+#files {
+  display:none;
+}
+textarea {
+  background:#e3e3e3;
+  color:#333;
+  height:80px;
+  width:160px;
+  border-radius:12px;
+  border:none;
+}
+</style>
+<canvas id="48" width="48px" height="48px"></canvas>
+  <canvas id="72" width="72px" height="72px"></canvas>
+  <canvas id="96" width="96px" height="96px"></canvas>
+  <canvas id="144" width="144px" height="144px"></canvas>
+  <canvas id="168" width="168px" height="168px"></canvas>
+  <canvas id="192" width="192px" height="192px"></canvas>
+  <canvas id="512" width="512px" height="512px"></canvas>
+
+<div class="page">
+<input type="text" placeholder="輸入名稱" id="pwaname">
+  <div class="btn m10" ripple-onclick="next1()">下一步</div>
+</div>
+
+<div class="page p2">
+  <img id="imagee">
+  <label for="files">
+<div class="btn m10">選擇檔案</div>
+<input type="file" id="files" name="files" />
+</label>
+  
+  <div class="btn m10" ripple-onclick="next2()">下一步</div>
+</div>
+
+<div class="page p3">
+    <div class="btn m10" ripple-onclick="download()">下載檔案</div>
+  <div class="btn m10" ripple-onclick="next3()">下一步</div>
+</div>
+
+<div class="page p4">
+  <textarea id="code" readonly="readonly"></textarea>
+  <div class="btn m10" ripple-onclick="copy('code')">複製</div>
+  <div class="btn m10" ripple-onclick="close()">完成</div>
+</div>
+
+<div class="bar">
+  <h4>輸入名稱&nbsp步驟1/4</h4>
+  <div class="line"></div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.6.0/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+<script src="https://erichsia7.github.io/ripple.js/ripple.min.js"></script>
+<script>
+if (window.File && window.FileReader && window.FileList && window.Blob) {
+  document.getElementById('files').addEventListener('change', handleFileSelect, false);
+  
+
+} else {
+  alert('您的瀏覽器不支援');
+}
+var getg ;
+function handleFileSelect(evt) {
+  var f = evt.target.files[0]; // FileList object
+  var reader = new FileReader();
+  // Closure to capture the file information.
+  reader.onload = (function(theFile) {
+    return function(e) {
+      var binaryData = e.target.result;
+      //Converting Binary Data to base 64
+      var base64String = window.btoa(binaryData);
+      //showing file converted to base64
+      $('#imagee').attr('src','data:image/jpeg;base64,' + base64String);
+      
+      
+      
+     
+      var ctx48 = document.getElementById('48') ;
+  var img48 = new Image();
+  img48.onload = function(){
+ctx48.getContext('2d').drawImage(img48,0,0,48,48);
+  };
+  img48.src = 'data:image/jpeg;base64,' + base64String;
+      
+   var ctx72 = document.getElementById('72') ;
+  var img72 = new Image();
+  img72.onload = function(){
+ctx72.getContext('2d').drawImage(img72,0,0,72,72);
+  };
+  img72.src = 'data:image/jpeg;base64,' + base64String;  
+var ctx96 = document.getElementById('96') ;
+  var img96 = new Image();
+  img96.onload = function(){
+ctx96.getContext('2d').drawImage(img96,0,0,96,96);
+  };
+  img96.src = 'data:image/jpeg;base64,' + base64String;  
+var ctx144 = document.getElementById('144') ;
+  var img144 = new Image();
+  img144.onload = function(){
+ctx144.getContext('2d').drawImage(img144,0,0,144,144);
+  };
+  img144.src = 'data:image/jpeg;base64,' + base64String;  
+var ctx168 = document.getElementById('168') ;
+  var img168 = new Image();
+  img168.onload = function(){
+ctx168.getContext('2d').drawImage(img168,0,0,168,168);
+  };
+  img168.src = 'data:image/jpeg;base64,' + base64String;  
+var ctx192 = document.getElementById('192') ;
+  var img192 = new Image();
+  img192.onload = function(){
+ctx192.getContext('2d').drawImage(img192,0,0,192,192);
+  };
+  img192.src = 'data:image/jpeg;base64,' + base64String; 
+      
+      var ctx512 = document.getElementById('512') ;
+  var img512 = new Image();
+  img512.onload = function(){
+ctx512.getContext('2d').drawImage(img512,0,0,512,512);
+  };
+  img512.src = 'data:image/jpeg;base64,' + base64String;  
+      
+      
+      var sizelist = [48,72,96,144,168,192] ;
+      
+      getg = base64String ;
+    };
+  })(f);
+  // Read in the image file as a data URL.
+  reader.readAsBinaryString(f);
+}
+
+function next1() {
+  $('.p2').fadeIn(333).css('display','flex');
+  $('.line').css('width','33%');
+  $('.bar h4').html('選擇圖標&nbsp步驟2/4');
+}
+function next2() {
+  $('.p3').fadeIn(333).css('display','flex');
+  $('.line').css('width','67%');
+  $('.bar h4').html('下載檔案&nbsp步驟3/4');
+}
+function next3() {
+  $('.p4').fadeIn(333).css('display','flex');
+  $('.line').css({'width':'100%','border-radius':'0px'});
+  $('.bar h4').html('複製代碼&nbsp步驟4/4');
+  $('.p4 textarea').val('<link href="pwaicon/512x512.png" sizes="512x512" rel="apple-touch-icon-precomposed" />\n<meta name="apple-mobile-web-app-capable" content="yes" />\n<meta name="apple-mobile-web-app-status-bar-style" content="defualt" />\n<link rel="manifest" href="manifest.json">');
+}
+function close() {
+  $('.p2,.p3,.p4').fadeOut(333);
+  $('.line').css({'width':'0%','border-radius':'0px 5px 5px 0px'});
+  $('.bar h4').html('輸入名稱&nbsp步驟1/4');
+}
+function copy(cwoid) {
+  document.getElementById(cwoid).select();
+  document.execCommand("Copy");
+  $('#' + cwoid).blur();
+  
+}
+
+
+function download() {
+  var pwaname = document.getElementById('pwaname').value ;
+  setTimeout(function() {
+     var zip = new JSZip();
+    zip.file("manifest.json",'{\n  "name": "' + pwaname + '",\n  "short_name": "' + pwaname + '",\n  "icons": [\n    {\n    "src": "pwaicon/48x48.png",\n    "sizes": "48x48",\n    "type": "image/png"\n  }, {\n    "src": "pwaicon/72x72.png",\n    "sizes": "72x72",\n    "type": "image/png"\n  }, {\n    "src": "pwaicon/96x96.png",\n    "sizes": "96x96",\n    "type": "image/png"\n  }, {\n    "src": "pwaicon/144x144.png",\n    "sizes": "144x144",\n    "type": "image/png"\n  }, {\n    "src": "pwaicon/168x168.png",\n    "sizes": "168x168",\n    "type": "image/png"\n  }, {\n    "src": "pwaicon/192x192.png",\n    "sizes": "192x192",\n    "type": "image/png"\n  }\n  ],\n  "start_url": "./?pwa=1",\n  "display": "standalone"\n}')
+var imgrr = zip.folder("pwaicon");
+imgrr.file("48x48.png", document.getElementById('48').toDataURL().split(',')[1], {base64: true});
+imgrr.file("72x72.png", document.getElementById('72').toDataURL().split(',')[1], {base64: true});
+imgrr.file("96x96.png", document.getElementById('96').toDataURL().split(',')[1], {base64: true});
+imgrr.file("144x144.png", document.getElementById('144').toDataURL().split(',')[1], {base64: true});
+imgrr.file("168x168.png", document.getElementById('168').toDataURL().split(',')[1], {base64: true});
+imgrr.file("192x192.png", document.getElementById('192').toDataURL().split(',')[1], {base64: true});
+imgrr.file("512x512.png", getg, {base64: true});   
+      
+zip.generateAsync({type:"blob"})
+.then(function(content) {
+    // see FileSaver.js
+    saveAs(content, "pwaicon.zip");
+}); 
+  },10)      
+}
+
+ripple('.btn','#000','0.5',888,'true');
+</script>
